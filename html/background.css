@@ -1,0 +1,15 @@
+div{
+    height: 200px;
+}
+
+.background-color{
+    background-color: blue;
+}
+
+.background-image{
+    background-image: url(images/good.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no repeat;
+/* f. */
+}

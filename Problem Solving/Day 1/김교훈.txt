@@ -1,0 +1,110 @@
+##1. next_permutation
+def next_permutation(A):
+    ##오름차순 마지막 인덱스 찾기
+    last_index=0
+    change1=0
+    cgange2=0
+    for i in range(1,len(A)):
+        if (A[i-1]<A[i]):
+            last_index=i
+    print(last_index)
+
+    ## 바꾸는 기준 인덱스 2개 설정 및 체인지
+    change_index1=last_index-1
+
+    for i in range(last_index,len(A)):
+        if(A[change_index1]<A[i]):
+            change_index2 = i
+    A[change_index1], A[change_index2]=A[change_index2], A[change_index1]
+
+    ## last 인덱스부터 change_index2을 기준으로 대칭으로 쫘르륵 바꾸기
+    i=0
+    while(1):
+        if(last_index+i==change_index2):
+            break
+        A[last_index+i],A[len(A)-1-i] = A[len(A)-1-i],A[last_index+i]
+        i=i+1
+
+
+##2. counting Sort
+
+DATA = [0,4,1,3,1,2,4,1]
+COUNT = [0]*(max(DATA)+1)
+for d in DATA:
+    COUNT[d] = COUNT[d]+1
+summ=0
+for i in range(0,len(COUNT)):
+    summ=summ+COUNT[i]
+    COUNT[i] = summ
+TEMP=[0]*(max(COUNT))
+for d in DATA:
+    COUNT[d]= COUNT[d] -1
+    TEMP[COUNT[d]] = d
+print(TEMP)
+# DATA[INDEX]의 값 = COUNT의 인덱스
+# COUNT 인덱스의 값 = TEMP의 인덱스
+# TEMP의 값 = DATA[INDEX]의 값
+# print(TEMP)11111
+
+
+##3. 베이비진
+DATA=[1,0,1,1,2,3]
+
+def is_babygin(A):
+    checker = [0]*10
+    triplet=0
+    run=0
+    is_run=0
+    ##체커에 데이터 넣기
+    for d in A:
+        checker[d] = checker[d]+1
+
+    ##run 검사
+    for i in range(0,len(checker)):
+        if (checker[i]!=0):
+            is_run=is_run+1
+            if(is_run==3):
+                run=run+1
+                is_run=0
+                checker[i]=checker[i]-1
+                checker[i-1]=checker[i-1]-1
+                checker[i-2]=checker[i-2]-1
+        else:
+            is_run=0
+
+    ## triplet 검사
+    for i in range(0,len(checker)):
+        triplet=triplet+checker[i]//3
+        checker[i]=checker[i]%3
+
+    ## baby-gin 검사 (tri수랑 run 더한게 2면 베이비진임)
+    if(triplet+run==2):
+        return 'YES'
+    else:
+        return 'NO'
+
+print(is_babygin(DATA))
+
+#4. view
+
+# 100
+# 0 0 225 214 82 73 241 233 179 219 135 62 36 13 6 71 179 77 67 139 31 90 9 37 93 203 150 69 19 137 28 174 32 80 64 54 18 0 158 73 173 20 0 102 107 48 50 161 246 145 225 31 0 153 185 157 44 126 153 233 0 201 83 103 191 0 45 0 131 87 97 105 97 209 157 22 0 29 132 74 2 232 44 203 0 51 0 244 212 212 89 53 50 244 207 144 72 143 0 0
+
+for case in range(0,10):
+    answer=0
+    all_i = int(input())
+    garo = list(map(int,(input().split())))
+    what=[]
+    for i in range(0,all_i):
+        if i<2:
+            continue
+        if i>(all_i-1)-2:
+            continue
+        near=[garo[i-2],garo[i-1],garo[i+1],garo[i+2]]
+        max_near = max(near)
+        saedai = garo[i]-max_near
+        if saedai<0:
+            saedai=0
+        answer = answer+saedai
+    print(f'#{case+1} {answer}')
+

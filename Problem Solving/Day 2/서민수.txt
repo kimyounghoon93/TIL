@@ -1,0 +1,233 @@
+# 1. ***** Next Permutation *****
+def next_permutation(Data):
+    cand1 = 0
+    for now in range(len(Data) - 1):
+        if Data[now] < Data[now+1]:
+            cand1 = now
+    if cand1 == 0 : return False
+
+    cand2 = len(Data) - 1
+    while Data[cand1] > Data[cand2]:
+        cand2 -= 1
+
+    Data[cand1], Data[cand2] = Data[cand2], Data[cand1]
+
+    Data[cand1 + 1:] = Data[:cand1:-1]
+
+    return Data
+
+Data = list(map(int, input().split()))
+print(next_permutation(Data))
+# ***** Next Permutation End *****
+
+
+# 2. ***** Prev Permutation *****
+def prev_permutation(Data):
+    cand1 = len(Data) - 1
+    for now in range(len(Data)-1):
+        if Data[now] > Data[now+1]:
+            cand1 = now
+    if cand1 == len(Data) - 1: return False
+
+    cand2 = len(Data) - 1
+    while Data[cand1] < Data[cand2]:
+        cand2 -= 1
+
+    Data[cand1], Data[cand2] = Data[cand2], Data[cand1]
+    Data[cand1 + 1:] = Data[:cand1:-1]
+    return Data
+
+Data = list(map(int, input().split()))
+print(prev_permutation(Data))
+# ***** Prev Permutation End *****
+
+
+# 3. ***** counting Sort *****
+def counting_sort(Data):
+    count = [0] * (max(Data) + 1)  # 카운트 배열
+    temp = [0] * len(Data) # 정렬된 배열
+
+    for now in range(len(Data)):
+        count[Data[now]] += 1
+
+    for now in range(1, len(count)):
+        count[now] += count[now-1]
+
+    for now in range(len(Data)-1, -1, -1):
+        count[Data[now]] -= 1
+        temp[count[Data[now]]] = Data[now]
+    return temp
+
+Data = list(map(int, input().split()))
+print(counting_sort(Data))
+# ***** Counting Sort End *****
+
+
+# 4. ***** Baby-gin *****
+def baby_gin(num):
+    count = [0] * 12    # max(Data) + 3
+    run = triplet = 0
+
+    for i in range(6):
+        count[num%10] += 1
+        num //= 10
+
+    for now in range(10):
+        while count[now] >= 3:
+            triplet += 1
+            count[now] -= 3
+
+        while count[now] >= 1 and count[now+1] >= 1 and count[now+2] >= 1:
+            run += 1
+            count[now] -= 1
+            count[now+1] -= 1
+            count[now+2] -= 1
+
+    if run+triplet == 2: return 'baby-gin'
+    else: return 'lose'
+
+num = int(input())
+print(baby_gin(num))
+# ***** Baby-gin End *****
+
+# 5. ***** VIEW End *****
+import sys
+sys.stdin = open('input.txt')
+def view(Data, count):
+    view_cnt = 0   # 조망권 확보 세대 수
+    dif = [0] * 4  # 좌우 2칸 씩
+    for now in range(2, count-2):
+        dif[0] = Data[now] - Data[now - 2]
+        dif[1] = Data[now] - Data[now - 1]
+        dif[2] = Data[now] - Data[now + 1]
+        dif[3] = Data[now] - Data[now + 2]
+
+        my_min = 256 
+        for i in range(len(dif)):
+            if dif[i] < my_min:
+                my_min = dif[i]
+
+        if my_min>0: view_cnt += my_min
+    return view_cnt
+
+for tc in range(1,11):
+    count = int(input())
+    Data = list(map(int, input().split()))
+    print(f'#{tc} {view(Data, count)}')
+# ***** VIEW End *****
+
+
+# 6. ***** MIN MAX *****
+import sys
+sys.stdin = open('input.txt')
+def min_max(Data):
+    max_num = 1
+    min_num = 1000000
+    for i in range(len(Data)):
+        if Data[i] > max_num:
+            max_num = Data[i]
+        if Data[i] < min_num:
+            min_num = Data[i]
+    return max_num - min_num
+
+for tc in range(1, int(input()) + 1):
+    n = int(input())
+    Data = list(map(int, input().split()))
+    print(f'#{tc} {min_max(Data)}')
+#  ***** MIN MAX END*****
+
+# 7. ***** NUMBER CARD *****
+import sys
+sys.stdin = open('input.txt', 'r')
+
+def card(Data):
+    c = [0] * 10
+    for i in range(len(Data)):
+        c[int(Data[i])] += 1
+    max_cnt = 0
+    for j in range(len(c)):
+        if c[j] >= c[max_cnt]:
+            max_cnt = j
+    return (max_cnt, c[max_cnt])
+
+for tc in range(1, int(input())+1):
+    n = int(input())
+    Data = input()
+    print(f'#{tc} {card(Data)[0]} {card(Data)[1]}')
+#  ***** NUMBER CARD END*****
+
+# 8.  ***** 부분합 *****
+import sys
+sys.stdin = open('input.txt', 'r')
+
+def section(Data, n, m):
+    max_num = min_num = 0
+    
+    for i in range(m):
+        min_num += Data[i]
+    for now in range(0, n - m + 1):
+        sum_num = 0
+        # sum(Data[now:now+m])
+        for j in range(now, now+m):
+            sum_num += Data[j]
+        if sum_num > max_num:
+            max_num = sum_num
+        if sum_num < min_num:
+            min_num = sum_num
+    return max_num - min_num
+
+for tc in range(1, int(input())+1):
+    n, m =  input().split()
+    Data = list(map(int, input().split()))
+    print(f'#{tc} {section(Data, int(n), int(m))}')
+#  ***** 부분합 END *****
+
+
+#  9. ***** FLATTEN END *****
+import sys
+sys.stdin = open('input.txt','r')
+
+def flatten(Data, count):
+    max_box = min_box = 0
+    howmany = len(Data)
+    for cnt in range(count+1):
+        for now in range(howmany):
+            if Data[now] > Data[max_box]:
+                max_box = now
+            if Data[now] < Data[min_box]:
+                min_box = now
+        if cnt < count:
+            Data[max_box] -= 1
+            Data[min_box] += 1
+    return Data[max_box]-Data[min_box]
+
+for tc in range(1,11):
+    count = int(input())
+    Data = list(map(int, input().split()))
+    print(f'#{tc} {flatten(Data, count)}')
+#  ***** FLATTEN END *****
+
+
+#  10. ***** 전기기차  *****
+import sys
+sys.stdin = open('input.txt', 'r')
+
+def EB(Charge, k, n):
+    now = 0
+    charge_cnt = 0
+    while(now + k < n):
+        for i in range(len(Charge)-1, -1 , -1):
+            if now + k >= Charge[i] and now < Charge[i]:
+                now = Charge[i]
+                charge_cnt += 1
+                break
+            if i == 0:
+                return 0
+    return charge_cnt
+
+for tc in range(1, int(input())+1):
+    k, n, m = input().split()
+    Charge = list(map(int, input().split()))
+    print(f'#{tc} {EB(Charge,int(k), int(n))}')
+
+#  ***** 전기기차 END *****

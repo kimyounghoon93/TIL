@@ -1,0 +1,132 @@
+0. view
+
+for i in range(10):
+    t=int(input())
+    b=list(map(int,input().split()))
+    v=0
+    for j in range(t-4):
+        p=b[j:j+5]
+        v+=max(p.pop(2)-max(p),0)
+    print(f'#{i+1} {v}')
+
+
+
+===================
+
+1. min & max
+
+import sys
+sys.stdin = open('ex1.txt', 'r')
+
+for i in range(int(input())):
+    length = int(input())
+    numbers = list(map(int, input().split()))
+
+    maxx = mini = numbers[0]
+    for j in range(length):
+        if numbers[j] > maxx:
+            maxx = numbers[j]
+        if numbers[j] < mini:
+            mini = numbers[j]
+
+    print(f'#{i+1} {maxx-mini}')
+
+====================
+
+2. 숫자카드
+
+import sys
+sys.stdin = open('ex2.txt', 'r')
+
+for i in range(int(input())):
+    length = int(input())
+    number = list(map(int, list(input())))
+    start = [0]*(max(number)+1)
+
+    for j in number:
+        start[j] += 1
+
+    maxx = start[0]
+
+    for k in range(len(start)):
+        if start[k] >= maxx :
+            maxx = start[k]
+            location = k
+
+    print(f'#{i+1} {location} {maxx}')
+
+==========================
+
+3. 구간합
+
+import sys
+sys.stdin = open('ex3.txt', 'r')
+
+for i in range(int(input())):
+    length, group = list(map(int, input().split()))
+
+    numbers = list(map(int, input().split()))
+
+    value = []
+    for j in range(length-group+1):
+        groups = numbers[j:j+group]
+
+        sum=0
+        for k in groups:
+            sum+=k
+        value+=[sum]
+
+    print(f'#{i+1} {max(value)-min(value)}')
+
+=============================
+
+4. flattern
+
+import sys
+sys.stdin = open('ex4 flattern input.txt', 'r')
+
+
+for i in range(10):
+    tries = int(input())
+    boxes = list(map(int, input().split()))
+    for j in range(tries):
+        max_location = boxes.index(max(boxes))
+        min_location = boxes.index(min(boxes))
+        boxes[max_location] -= 1
+        boxes[min_location] += 1
+    answer = max(boxes)-min(boxes)
+    print(f'#{i+1} {answer}')
+
+
+=============================
+
+5. 전기차
+
+import sys
+sys.stdin = open('ex5.txt', 'r')
+
+for i in range(int(input())):
+    k, n, m = map(int, input().split())
+    charging_stop = list(map(int, input().split()))[::-1]
+    start = 0
+    answer = 0
+
+    while start + k < n:
+        for charging_point in charging_stop:
+            if charging_point > start+k:
+                continue
+
+            else:
+                if start != charging_point:
+                    start = charging_point
+                    answer += 1
+                    break
+                else:
+                    start = n
+                    answer = 0
+                    break
+
+    print(f'#{i+1} {answer}')
+
+
+

@@ -1,0 +1,110 @@
+
+1.View
+for j in range(10):
+    num=int(input())
+    tall= list(map(int,input().split()))
+    count=0
+    for i in range(len(tall)):
+        if i==0 or i==1 or i==len(tall)-1 or i==len(tall)-2:
+            continue
+        if tall[i]-tall[i-1]>=1 and tall[i]-tall[i-2]>=1 and tall[i]-tall[i+1]>=1 and tall[i]-tall[i+2]>=1:
+            leftright=[tall[i]-tall[i-1] , tall[i]-tall[i-2] ,  tall[i]-tall[i+1] ,  tall[i]-tall[i+2]]
+            count+=min(leftright)
+    print(f'#{j+1} {count}')
+
+
+2.Flatten
+for j in range(10):
+    num=int(input())
+    tall= list(map(int,input().split()))
+    count=0
+    for i in range(num):
+        tall[tall.index(max(tall))]=max(tall)-1
+        tall[tall.index(min(tall))]=min(tall)+1
+    print(f'#{j+1} {max(tall)-min(tall)}') 
+
+
+
+3. min max
+T=int(input())
+for t in range(T):
+    num=input()
+    data=list(map(int,input().split()))
+    data_min=data[0]
+    data_max=data[0]
+    for i in data:
+        if i>data_max:
+            data_max=i
+        if i<data_min:
+            data_min=i
+    print(f'#{t+1} {data_max-data_min}')
+
+
+
+
+4.구간합
+T = int(input())
+for t in range(T):
+    x,y=input().split()
+    N=int(x)
+    M=int(y)
+    sample=list(map(int,input().split()))
+    range_sum_max=sum(sample[0:M])
+    range_sum_min=sum(sample[0:M])
+    for i in range(1,N-M+1):
+        if sum(sample[i:i+M])>range_sum_max:
+            range_sum_max=sum(sample[i:i+M])
+        if sum(sample[i:i + M]) < range_sum_min:
+            range_sum_min = sum(sample[i:i + M])
+    print(f'#{t + 1} {range_sum_max-range_sum_min}')
+
+
+
+
+5. 카드풀기
+T=int(input())
+for t in range(T):
+    length=int(input())
+    sample=input()
+    sample_list=[int(i) for i in sample]
+    counts=[0]*10
+    for i in sample_list:
+        counts[i]+=1
+    max_count=max(counts)
+    for i in range(10):
+        if counts[i]==max_count:
+            result1=i
+            result2=counts[i]
+    print(f'#{t+1} {result1} {result2}')
+
+
+
+6. 전기버스
+T = int(input())
+for t in range(T):
+    K,N,M=map(int,input().split())
+    charger=list(map(int,input().split()))
+    charger.append(N)
+    charger_count=0
+    energy=K
+
+    for i in range(1,N):
+        energy-=1
+        if energy<0:
+            charger_count=0
+            break
+        if i in charger:
+            if charger[charger.index(i)+1]-charger[charger.index(i)]>energy:
+                charger_count+=1
+                energy=K
+    print(f'#{t+1} {charger_count}')
+
+
+
+    
+
+        
+
+
+
+

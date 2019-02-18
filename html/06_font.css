@@ -1,0 +1,10 @@
+.font {
+    font-size: 30px;
+    font-style: italic;
+    font-weight: 700; 
+    /* font-family: 'Romanesco', cursive; */
+    font-family: 'Romanesco', 'Noto Sans KR', sans-serif;
+    line-height: 1.5;
+    letter-spacing: -.2px;
+    text-align: center;
+}

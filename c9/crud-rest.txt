@@ -1,0 +1,167 @@
+위키백과 REST 검색 원칙에 의한 가이드
+# REST
+## REST의 구성
+- 자원(Resource) - URI
+- 행위(Verb) - HTTP Method
+- 표현(Representations)
+
+## REST 디자인 가이드
+1. URI는 정보의 자원을 표현해야 한다.
+2. 자원에 대한 행위는 HTTP Method(GET, POST, PUT, DELETE)로 표현한다.
+
+## EX)
+```	 GET /movies/show/1 (x)
+	 GET /movies/1 (o)```
+
+```	 GET /movies/create (x) - GET Method는 자원 생성에 부적합
+	 POST /movies (o)```
+
+``` 	 GET /movies/2/update (x) - GET 부적합
+	 PUT /movies/2 (o)```
+
+``` 	 GET /movies/2/edit - 수정 페이지 보여줌
+``` 	 POST /movies/2/edit - 수정 작업을 수행함
+
+ls -al
+d/rwx/r-x/r-x
+디렉토리 or 폴더 d는 디렉토리
+/r읽고 w쓰고 x실행하기 파일의 소유자가 할 수 있는 것
+/그룹에 속한 사람 r-x 읽고 실행
+/그 외에 사람
+./manage.py runserver $IP:$PORT = 현재 폴더에 있는 메니지 닷 파이를 실행한다
+
+crud에 templates 안에 base.html 생성
+<h1>여기는 base.html!</h1>
+    {% block container %}
+    {% endblock %}
+세팅즈.py 파일에 TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],
+DIRS 의 빈 칸에 os.path.join(BASE_DIR, 'crud', 'templates')
+
+인덱스 html
+{% extends 'base.html' %}
+{% block container %}
+    <h1>
+        Post Index
+    </h1>
+    <a href="/posts/new/">New</a>
+    <ul>
+    {% for post in posts %}
+        <li><a href="/posts/{{post.pk}}/">{{ post.title }}</a></li>
+    {% endfor %}
+    </ul>
+{% endblock %}
+
+views.py
+from django.shortcuts import render, redirect
+from .models import Post, Comment
+# Create your views here.
+# views.py >> urls.py >> template.py
+# def throw
+# def catch
+
+def index(request):
+    return render(request,'index.html')
+
+# Form tag
+def new(request):
+    if request.method == 'POST':
+
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+        image = request.FILES.get('image')
+        post = Post(title=title, content=content, image=image)
+        post.save()
+        # 렌더는 GET에만 사용한다.
+        # return render(request, 'create.html')
+        # POST는 리 다이렉트를 사용한다 위에 임포트 해줘야 된다.
+        return redirect('posts:detail', post.pk)
+    else:
+        return render(request, 'new.html')
+        
+# def create(request):
+#     title = request.POST.get('title')
+#     content = request.POST.get('content')
+#     image = request.FILES.get('image')
+    
+#     # DB INSERT 
+#     post = Post(title=title, content=content, image=image)
+#     post.save()
+#     # 렌더는 GET에만 사용한다.
+#     # return render(request, 'create.html')
+#     # POST는 리 다이렉트를 사용한다 위에 임포트 해줘야 된다.
+#     return redirect('posts:detail', post.pk)
+    # 외부 사이트로도 리다이렉트 가능함
+# def rd(request, 변수):
+def naver(request, q):
+    return redirect(f'https://search.naver.com/search.naver?query={q}')
+    
+    # https://playground-busanteam.c9users.io/posts/naver/검색\
+    # 깃헙처럼 id값이 주소창에 입력 되는 경우
+def github(request, username):
+    return redirect(f'https://github.com/{username}')
+
+def index(request):
+    # All Post
+    posts = Post.objects.all()
+    
+    return render(request, 'index.html', {'posts':posts})
+    
+def detail(request, post_id):
+    post = Post.objects.get(pk=post_id)
+    return render(request, 'detail.html', {'post': post})
+    
+def delete(request, post_id):
+    if request.method == 'POST':
+        # 삭제하는 코드
+        post = Post.objects.get(pk=post_id)
+        post.delete()
+        return redirect('posts:list')
+    else:
+        return render(request, 'delete.html')
+        
+def edit(request, post_id):
+    post = Post.objects.get(pk=post_id)
+    if request.method == 'POST':
+        # update
+        post.title = request.POST.get('title')
+        post.content = request.POST.get('content')
+        post.save()
+        return redirect('posts:detail', post.pk)
+    else:
+        return render(request, 'edit.html', {'post':post})
+    # post = Post.objects.get(pk=post_id)
+    # return render(request, 'edit.html', {'post':post})
+
+# def update(request, post_id):
+#     # 수정하는 코드
+#     # 수정하기 위해 수정 할 것을 불러온다
+#     post = Post.objects.get(pk=post_id)
+#     post.title = request.POST.get('title')
+#     post.content = request.POST.get('content')
+#     # 실제로 반영하기위해선 세이브를 해주어야 한다
+#     post.save()
+    
+#     return redirect('posts:detail', post.pk)
+    
+    
+def comments_create(request, post_id):
+    #댓글을 달 게시물
+    post = Post.objects.get(pk=post_id)
+
+    #form에서 넘어온 댓글 내용
+    content = request.POST.get('content')
+    
+    #댓글 생성 및 저장
+    comment = Comment(post=post, content=content)
+    comment.save()
+    
+    return redirect('posts:detail', post.pk)
+    
+def comments_delete(request, post_id, comments_id):
+    comment = Comment().objects.get(pk=comment_id)
+    comment.delete()
+    return redirect('posts:detail', post_id)
+    

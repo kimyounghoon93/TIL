@@ -1,0 +1,121 @@
+#1. 최대, 최소
+
+import sys
+sys.stdin = open("sample_input.txt", "r")
+
+T = int(input())
+
+for test_case in range(1, T+1):
+    cnt = int(input())
+    numbers = list(map(int, input().split()))
+
+    the_max = numbers[0]
+
+    the_min = 9999999
+    for this in range(cnt):
+
+        if the_max < numbers[this]:
+            the_max = numbers[this]
+
+        if the_min > numbers[this]:
+            the_min = numbers[this]
+
+    result = the_max - the_min
+
+    print(f'#{test_case} {result}')
+
+
+#2. min_max
+
+import sys
+sys.stdin = open("sample_input.txt", "r")
+
+T = int(input())
+
+for test_case in range(1, T+1):
+    cnt = int(input())
+    numbers = list(map(int, input().split()))
+
+    the_max = numbers[0]
+
+    the_min = 9999999
+    for this in range(cnt):
+
+        if the_max < numbers[this]:
+            the_max = numbers[this]
+
+        if the_min > numbers[this]:
+            the_min = numbers[this]
+
+    result = the_max - the_min
+
+    print(f'#{test_case} {result}')
+
+#3. 범위 합
+
+import sys
+
+sys.stdin = open("range_sum.txt", 'r')
+
+T = int(input())
+
+for test_case in range(1, T+1):
+    num_cnt, sum_cnt = map(int,input().split())
+
+    num_list = list(map(int, input().split()))
+    sum_list = []
+    for n in range(num_cnt - sum_cnt + 1):
+        num_sum = 0
+        for i in range(sum_cnt):
+            num_sum += num_list[i+n]
+        sum_list.append(num_sum)
+        max_sum = max(sum_list)
+        min_sum = min(sum_list)
+
+    result = max_sum - min_sum
+    print(f'#{test_case} {result}')
+
+#4. 전기버스
+
+import sys
+
+sys.stdin = open('bus.txt', 'r')
+
+T = int(input())
+
+for test_case in range(1, T+1):
+    cnt = 0
+
+    K, N, M = map(int, input().split())
+
+    stations = list(map(int, input().split()))
+
+    for position in range(N-1):
+
+        for i in range(len(stations)-1):
+            if stations[i+1] - stations[i] - 1 >= K:
+                cnt = 0
+                break
+
+            if N - position > K and stations[i] == position:
+                cnt += 1
+
+            if stations[i + 1] - stations[i] - 1 == 0 :
+                cnt -= 1
+
+    print(f'#{test_case} {cnt}')
+
+
+#5. view
+
+for i in range (10):
+    N=int(input())
+    buildings=list(map(int, input().split()))
+    count=0
+    for col in range(len(buildings)):
+        if col==0 or col==1 or col==len(buildings)-2 or col==len(buildings)-1:
+            continue
+        if buildings[col]-buildings[col-1]>=1 and buildings[col]-buildings[col-2]>=1 and buildings[col]-buildings[col+1]>=1 and buildings[col]-buildings[col+2]>=1:
+            houses=[buildings[col]-buildings[col-1], buildings[col]-buildings[col-2], buildings[col]-buildings[col+1], buildings[col]-buildings[col+2]]
+            count+=min(houses)
+    print(f'#{i+1} {count}')

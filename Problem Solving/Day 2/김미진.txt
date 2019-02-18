@@ -1,0 +1,92 @@
+1. View
+for t in range(10):
+    N = int(input())
+    data = list(map(int,input().split()))
+    result=0
+    
+    for view in range(2,N-2):
+        if data[view] == max(data[view-2:view+3]):
+                green = data[view]-max(data[view-2],data[view-1],data[view+1],data[view+2])
+                result+=green
+
+    print(f"#{t+1} {result}")
+
+2. flatten
+for t in range(10):
+    N=int(input())
+    data=list(map(int,input().split()))
+
+    for i in range(N):
+        data[data.index(max(data))]-=1
+        data[data.index(min(data))]+=1
+        if (max(data)-min(data))<=1:
+            break
+
+    print(f"#{t+1} {max(data)-min(data)}")
+
+3. min-max
+T=int(input())
+for t in range(T):
+    N=int(input())
+    test_case=list(map(int,input().split()))
+    high=low=test_case[0]
+    for i in test_case:
+        if i>high:
+            high=i
+        if low>i:
+            low=i
+    print(f"#{t+1} {high-low}")
+
+
+4. 전기버스
+T=int(input())
+for t in range(T):
+    K,N,M=map(int,input().split())
+    charge=list(map(int,input().split()))
+    bus=cnt=0
+
+    for i in range(M):
+        if bus+K in charge:
+            bus = bus+K
+            cnt+=1
+        else:
+            for i in range(1,K):
+                if bus+K-i in charge:
+                    bus = bus+K-i
+                    cnt+=1
+                    break
+            else:
+                cnt=0
+        if cnt==0:
+            break
+        if K>=N-bus:
+            break
+
+    print(f"#{t+1} {cnt}")
+
+5. 숫자카드
+T=int(input())
+for t in range(T):
+    N=int(input())
+    num=list(map(int,input()))
+    count=[0]*10
+    high=0
+    for n in range(len(num)):
+        count[num[n]]+=1
+    for c in range(len(count)):
+        if count[c]>=high:
+            high=count[c]
+            number=c
+    print(f"#{t+1} {number} {high}")
+
+6. 구간합
+T=int(input())
+for t in range(T):
+    N,M=map(int,input().split())
+    test_case=list(map(int,input().split()))
+    result=[]
+
+    for i in range(N-M+1):
+        result.append(sum(test_case[i:i+M]))
+
+    print(f"#{t+1} {max(result)-min(result)}")

@@ -1,0 +1,70 @@
+로그인 기능
+
+
+1. 새로운 앱 만들기
+궁금한 것
+django 검색어
+공식페이지
+
+python manage.py startapp accounts
+crud에 templates-settings.py
+'accounts.apps.AccountsConfig', 추가
+
+crud에 urls 앱 추가
+path('accounts/', include('accounts.urls')),
+
+accounts 에 urls
+from django.urls import path
+from . import views
+
+app_name = 'accounts'
+
+urlpatterns = [
+    path('signup/', views.signup, name='signup')
+]
+추가
+
+2. views.py
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm
+
+# Create your views here.
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            return redirect('posts:list')
+    else:
+        form = UserCreationForm()
+    
+    return render(request, 'signup.html', {'form':form})
+
+3. templates-signup.html 생성
+로그인 창 만들기
+{% extends 'base.html' %}
+
+{% block container %}
+   
+<h1>회원가입</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit"/>
+</form>
+
+{% endblock %}
+
+4. 어드민 창에서 확인
+http://playground-busanteam.c9users.io:8080/admin/auth/user/
+
+5. session
+세션 = 임시공간
+로그아웃 버튼을 누르거나 만료기간이 지나기전까지 정보를 들고 있는 시스템
+ex) '세션이 만료되었습니다. 다시 로그인하여 주십시오.'
+
+6. 로그인 창
+
+CRUD - templates - base.html    <h1>나는 {{ user.username }}</h1>
+

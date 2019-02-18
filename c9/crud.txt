@@ -1,0 +1,139 @@
+pyenv virtualenv 3.6.7 crud-venv
+pyenv local crud-venv
+pip install django
+django-admin startproject crud .
+python manage.py runserver $IP:$PORT
+== ./manage.py runserver $IP:$PORT
+세팅
+ALLOWED_HOSTS = ['playground-busanteam.c9users.io']
+
+
+INSTALLED_APPS = [
+    
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'posts.apps.PostsConfig',
+]
+
+모델
+models.py(변경사항이 있으면 makemigrations를 다시 해주어야 한다)
+class Post(models.Model):
+    title = models.CharField(max_length=100)
+    content = models.TextField()
+
+변경사항 저장 후 하기
+python manage.py startapp posts
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver $IP:$PORT
+
+장고에서 사용하는 문법들을 사용할 수 있게 활성화 시킴
+python manage.py shell
+from posts.models import Post
+post = Post(title='Hello', content='world!')
+>>> post
+<Post: Post object (None)
+>
+>>> post.title
+'Hello'
+
+>>> post.save()
+
+>>> Post.objects.all()
+<QuerySet [<Post: Post object (1)>]>
+
+post = Post.objects.get(pk=1)
+>>> post
+<Post: Post object (1)>
+
+>>> post.title
+
+'Hello'
+
+(정확한 값 검색)
+복수
+posts = Post.objects.filter(title='Hello').all()
+
+>>> posts
+
+<QuerySet [<Post: Post object (1)>]>
+단수
+>>> post = Post.objects.filter(title='Hello').first()
+
+>>> post
+<Post: Post object (1)>
+(한 자라도 포함된 값 검색)
+LIKE
+posts = Post.objects.filter(title__contains='He').all()
+>>> posts
+
+<QuerySet [<Post: Post object (1)>]>
+
+오름차순 정렬
+>>> posts = Post.objects.order_by('title').all()
+
+>>> posts
+
+<QuerySet [<Post: Post object (1)>]>
+내림차순 정렬
+>>> posts = Post.objects.order_by('-title').all()
+
+>>> posts
+
+<QuerySet [<Post: Post object (1)>]>
+
+# views.py >> urls.py >> template.py
+new page
+creat page
+
+views.py
+ # DB INSERT 
+    
+post = Post(title=title, content=content)
+    
+post.save()
+
+admin.py
+from django.contrib import admin
+
+from .models import Post
+
+
+# Register your models here.
+
+admin.site.register(Post)
+관리자 생성
+cd django
+
+cd crud
+
+python manage.py createsuperuser
+
+Username(leave blank to use 'ubuntu'): admin
+
+Email address: admin@admin.com
+
+Password: 
+Password (again): 
+
+The password is too similar to the email address.
+
+This password is too short. It must contain at least 8 characters.
+
+This password is too common.
+
+Bypass password validation and create user anyway? [y/N]: y
+
+Superuser created successfully.
+
+관리를 하기 위해 admin.py를 가서
+from .models import 클레스명
+admin.site.register(클레스명)
+관리자 페이지에 나오게 하려면(메소드를 오버라이드 하다)
+
+def __str__(self):  -- 기본값
+?return self.name -- 보기 편하게 수정

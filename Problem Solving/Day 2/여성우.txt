@@ -1,0 +1,198 @@
+1. 전기버스
+for T in range(int(input())):
+    K, N, M = list(map(int, input().split()))
+    stops = [0] * N
+    chargers = list(map(int, input().split()))
+    for charger in range(M):
+        stops[chargers[charger]] = 1
+    now = 0
+    flag = 0
+    answer = 0
+    while now + K < N:
+        can_go = stops[now + 1:now + 1 + K]
+        if can_go.count(1) == 0:
+            flag = 1
+            break
+        else:
+            for checkpoint in range(now + K, now, -1):
+                if stops[checkpoint] == 1:
+                    answer += 1
+                    now = checkpoint
+                    break
+    if flag:
+        print(f'#{T+1} 0')
+    else:
+        print(f'#{T+1} {answer}')
+
+2. 구간 합
+for T in range(int(input())):
+    N, M = list(map(int, input().split()))
+    numList = list(map(int, input().split()))
+    max_sum = numList[0]
+    min_sum = sum(numList)
+    for trying in range(N-M+1):
+        this_sum = sum(numList[trying:trying+M])
+        if this_sum > max_sum:
+            max_sum = this_sum
+        if this_sum < min_sum:
+            min_sum = this_sum
+    answer = max_sum - min_sum
+    print(f'#{T+1} {answer}')
+
+3. Flatten
+for T in range(10):
+    try_num = int(input())
+    case = list(map(int, input().split()))
+    highest = max(case)
+    h_index = case.index(highest)
+    lowest = min(case)
+    l_index = case.index(lowest)
+    answer = highest - lowest
+    for trying in range(try_num):
+        if answer == 0 or answer == 1:
+            break
+        else:
+            case[l_index] += 1
+            case[h_index] -= 1
+            highest = max(case)
+            h_index = case.index(highest)
+            lowest = min(case)
+            l_index = case.index(lowest)
+            answer = highest - lowest
+    print(f'#{T+1} {answer}')
+
+4. minmax
+for T in range(int(input())):
+    numlen = input()
+    numList = list(map(int, input().split()))
+    answer = max(numList) - min(numList)
+    print(f'#{T+1} {answer}')
+
+5. 숫자카드
+for T in range(int(input())):
+    cardlen = int(input())
+    cardsource = input()
+    cards = [int(cardsource[num]) for num in range(cardlen)]
+    counts = [0] * 10
+    for card in range(cardlen):
+        counts[cards[card]] += 1
+    max_count = max(counts)
+    if counts.count(max_count) > 1:
+        for count_num in range(9, -1, -1):
+            if counts[count_num] == max_count:
+                max_count_num = count_num
+                break
+    else:
+        max_count_num = counts.index(max_count)
+    print(f'#{T+1} {max_count_num} {max_count}')
+
+6. view
+for T in range(10):
+    blength = int(input())
+    buildings = list(map(int, input().split()))
+    building_count = 0
+    building = 2
+    while building <= blength - 2:
+        looking = buildings[building-2: building+3]
+        checking = buildings[building]
+        if max(looking) > checking:
+            building += 1
+            pass
+        else:
+            looking[2] = 0
+            next_high = max(looking)
+            counts = checking - next_high
+            building_count += counts
+            building += 3
+    print(f'#{T+1} {building_count}')
+
+7. babygin
+import sys
+
+
+def max_num(ls):
+    maxnum = ls[0]
+    for index in range(1, len(ls)):
+        if ls[index] > maxnum:
+            maxnum = ls[index]
+    return maxnum
+
+
+def babygin(ls):
+    k = max_num(ls)
+    counts = [0 for i in range(k + 1)]
+    for num in range(len(ls)):
+        counts[ls[num]] += 1
+    for index in range(len(counts)):
+        if counts[index] >= 3:
+            counts[index] -= 3
+    for index in range(len(counts)-2):
+        if counts[index] and counts[index + 1] and counts[index + 2]:
+            counts[index] -= 1
+            counts[index + 1] -= 1
+            counts[index + 2] -= 1
+    zero_count = 0
+    for index in range(len(counts)):
+        if counts[index] == 0:
+            zero_count += 1
+    if zero_count == len(counts):
+        return True
+    else:
+        return False
+
+
+sys.stdin = open('input_babygin.txt', 'r')  # 파일에서 읽을 때 사용
+
+num = int(input())
+numList = [0] * 6
+for part in range(6):
+    numList[part] = num % 10
+    num = num // 10
+print(babygin(numList))
+
+8. permutation
+def previous_permutation(ls):
+    numList = ls[:]
+    nextChangingIndex = -1
+    for index in range(len(numList) - 1, 0, -1):
+        if numList[index] < numList[index - 1]:
+            nextChangingIndex = index - 1
+            break
+    if nextChangingIndex != -1:
+        for index in range(len(numList) - 1, nextChangingIndex, -1):
+            if numList[index] < numList[nextChangingIndex]:
+                numList[index], numList[nextChangingIndex] = numList[nextChangingIndex], numList[index]
+                break
+        reversedChangingList = numList[len(numList) - 1:nextChangingIndex:-1]
+        for index in range(len(reversedChangingList)):
+            numList[index + nextChangingIndex + 1] = reversedChangingList[index]
+        previous_permutation(numList)
+        print(numList)
+    else:
+        return
+
+def next_permutation(ls):
+    numList = ls[:]
+    nextChangingIndex = -1
+    for index in range(len(numList)-1, 0, -1):
+        if numList[index] > numList[index-1]:
+            nextChangingIndex = index - 1
+            break
+    if nextChangingIndex != -1:
+        for index in range(len(numList)-1, nextChangingIndex, -1):
+            if numList[index] > numList[nextChangingIndex]:
+                numList[index], numList[nextChangingIndex] = numList[nextChangingIndex], numList[index]
+                break
+        reversedChangingList = numList[len(numList)-1:nextChangingIndex:-1]
+        for index in range(len(reversedChangingList)):
+            numList[index+nextChangingIndex+1] = reversedChangingList[index]
+        print(numList)
+        next_permutation(numList)
+    else:
+        return
+
+
+Data = [3, 2, 5, 4, 1]
+previous_permutation(Data)
+print(Data, '원본')
+next_permutation(Data)

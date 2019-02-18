@@ -1,0 +1,101 @@
+ide.c9.lo
+터미널에
+파이썬 설치
+git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bashrc
+exec "$SHELL"
+
+git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
+echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc
+exec "$SHELL"
+설치
+pyenv install 3.6.7
+세팅
+확인
+pyenv global 3.6.7
+busanteam:~/workspace
+python -V
+Python 3.6.7
+
+가상환경 구축 후 
+pip인스톨을 사용하면 일반환경에는 적용 되지 않음
+가상환경에만 (그 공간만)작동 됨 
+
+pyenv virtualenv 3.6.7 first-venv(가상환경의 이름)
+
+$ mkdir mysite 폴더 생성
+
+busanteam:~/workspace $ cd mysite
+
+busanteam:~/workspace/mysite $ pyenv local
+busanteam:~/workspace/mysite $ pyenv local first-venv
+pip를 업그레이드 함
+pip install -U pip
+버전확인(가상환경과 바탕과 버전이 다름)
+pip --version
+플라스크 설치
+pip install flask
+가상환경에 설치 후 확인하는 방법
+pip freeze
+
+접속 Ctrl 누르고 주소 클릭
+FLASK_APP=app.py flask run --host=$IP --port=$PORT
+자동 새로고침
+
+import os 
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return 'Hello World!'
+    
+if __name__ == '__main__':
+    app.run(host=os.getenv('IP'), port=os.getenv('PORT'), debug=True)
+python app.py
+
+
+ <form action= "/receive" method="get">
+        <input type="text" name="(누가 메세지에 접근했는지, 메세지에 대한 내용을 변수이름을 적음)"/>
+            <input type="text" name="message(받는쪽을 위한 정보)"/>    
+        <input type="submit" value="Submit"/>
+    </form>
+form은 인풋 값을 다른 곳으로 보내줌 
+
+가상환경 설정
+pyenv virtualenv 3.6.7 orm-venv
+pyenv local orm-venv
+pip 및 Flask 설치
+pip install -U pip
+pip install flask Flask-SQLAlchemy Flask-Migrate
+
+삭제
+from app import db, user
+user.query.all()
+user = User.query.get(1)
+db.session.delete(user)
+db.session.commit()
+
+DELETE
+DELETE FROM users WHERE id=1;
+user = User.query.get(1)
+db.session.delete(user)
+db.session.commit()
+
+==> 1번이 사라짐
+
+이름 바꾸기
+user = User.query.get(2)
+user.username
+'~~~2번이름'
+user.username = 'NewName'
+==>바뀜
+
+UPDATE
+UPDATE users SET username='NewName' WHERE id=2;
+user = User.query.get(2)
+user.username = 'NewName'
+db.session.commit()

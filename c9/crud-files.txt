@@ -1,0 +1,144 @@
+style.css를 사용하기 위해선
+폴더이름을 꼭 static으로 해주어야 적용된다.
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+                           
+    <link rel="stylesheet" href="{% static 'style.css' %}" type="text/css" />
+</head>
+<body>
+    <h1>
+        Post Index
+    </h1>
+    <a href="{% url 'posts:new' %}">New</a>
+    <ul>
+    {% for post in posts %}
+        <li><a href="{% url 'posts:detail' post.pk %}">{{ post.title }}</a></li>
+    {% endfor %}
+    </ul>
+</body>
+</html>
+
+데이터 베이스에 시간 입력 방법
+models.py
+# 테이블 만들 때 필수라고 보면 되는 것
+    created_at = models.DateTimeField(auto_now_add=True) # 생성 될 때, 딱 한 번만 현재시간이 들어감
+    updated_at = models.DateTimeField(auto_now=True) # 변경이 될 때 마다, 현재시각
+admin.py
+from django.contrib import admin
+from .models import Post, Comment
+
+
+class PostAdmin(admin.ModelAdmin):
+    list_display = ('title','content','created_at','updated_at',)
+
+
+# Register your models here.
+admin.site.register(Post, PostAdmin)
+admin.site.register(Comment)
+
+
+-----
+데이터 베이스를 밀어버리는 방법
+migrations/
+ad.sqlite3/0001~숫자로 된거
+python manage.py makemigrations
+python manage.py migrate
+지우고 나면 admin을 다시 생성해야 함
+python manage.py createsuperuser
+-----
+admin.py에서
+from django.contrib import admin
+from .models import Post, Comment
+
+
+class PostAdmin(admin.ModelAdmin):
+    list_display = ('title','content','created_at','updated_at',)
+
+
+# Register your models here.
+admin.site.register(Post, PostAdmin)
+admin.site.register(Comment)
+
+settings.py에서
+107번 
+LANGUAGE_CODE = 'ko-kr'
+
+
+TIME_ZONE = 'Asia/Seoul'
+서버시간, 언어 한국으로 바꿔주면됨
+
+그리고 맨밑 # Media Files에
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')추가
+
+
+이미지를 모델에 넣었을 경우
+ #(blank=True)를 넣으면 빈 값이 와도 에러가 뜨지않는다
+    image = models.ImageField(blank=True)
+pip install Pillow 를 하고
+python manage.py makemigrations를 해준다
+python manage.py migrate
+
+new.html
+<input type="file" name="image" accept="image/*"/>
+넣기
+
+views.py에서
+def create(request):
+    title = request.POST.get('title')
+    content = request.POST.get('content')
+    image = request.FILES.get('image')
+    
+      post = Post(title=title, content=content, image=image)
+    post.save()
+        return redirect('posts:detail', post.pk)
+
+detail.html
+<h1>
+        Post Detail
+    </h1>
+    <img src="{{ post.image.url }}"></img>
+
+urls.py에 두가지 넣어줘야 보임
+from django.conf.urls.static import static
+
+from django.conf import settings
+맨밑엔
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+터미널로 가서
+pip install pilkit
+pip install django-imagekit
+
+settings.py 에서
+INSTALLED_APPS 안에
+'imagekit', 추가
+
+models.py에서
+from imagekit.models import ProcessedImageField
+
+from imagekit.processors import ResizeToFill
+# 이미지 새로 만듦
+    # 둘다 비율은 유지한 상태
+    # ResizeToFill 맞추고 넘치는 부분 잘라내기.
+    # ResizeToFit 맞추고 남는 부분을 빈공간으로 둠
+image = ProcessedImageField(
+            upload_to='posts/images', # 저장 위치
+            processors=[ResizeToFill(300,300)], # 어떠한 형태로 처리할지 설정하는 작업 목록을 리스트 형태로 넘겨주는 것
+	format='JPEG', # 저장포맷 (확장자)
+            options={'quality':90}, # 저장 포맷 관련 옵션
+
+모델을 변경했으니
+python manage.py makemigrations
+python manage.py migrate
+해주고
+
+서버 실행
+python manage.py runserver $IP:$PORT
+

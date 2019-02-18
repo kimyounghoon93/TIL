@@ -1,0 +1,90 @@
+1. next_permutation
+
+import sys
+sys.stdin = open('input.txt','r')
+data = list(input())
+def next_permutation(data):
+    can1location = len(data)-1
+    before=-1
+    for now in data[::-1]:
+        if int(now)<before:
+            break
+        else:
+            before=int(now)
+            can1location-=1
+
+    if can1location==-1:
+        return False
+    for nowafter in range(can1location+1,len(data)):
+        if data[nowafter]>data[can1location]:
+            can2location=nowafter
+        else:
+            break
+    data[can1location], data[can2location] = data[can2location], data[can1location]
+    data[can1location + 1:] = data[:can1location:-1]
+    return(data)
+data = next_permutation(data)
+if data:
+    print(''.join(data))
+else :
+    print("마지막순열입니다")
+
+2.counting sort
+
+import sys
+sys.stdin = open('input.txt','r')
+input = list(map(int,input().split()))
+countList = [0]*(max(input)+1)
+for now in input:
+    countList[now]+=1
+for c in range(len(countList)-1):
+    countList[c+1]=countList[c]+countList[c+1]
+result = [0]*countList[-1]
+for num in input:
+    result[countList[num]-1]=num
+    countList[num]-=1
+print(result)
+
+3.Baby-gin
+
+import sys
+sys.stdin = open('input.txt','r')
+inputList = list(map(int,input()))
+def baby_gin(inputList):
+    countList = [0]*(max(inputList)+1)
+    for now in inputList:
+        countList[now]+=1
+    for idx in range(len(countList)):
+        while (countList[idx] >= 3):
+            countList[idx] -= 3
+        if countList[idx] == 0:
+            continue
+        else :
+            if countList[idx+1] >=countList[idx] and countList[idx+2] >=countList[idx]:
+                countList[idx]-=countList[idx]
+                countList[idx+1]-=countList[idx]
+                countList[idx+2]-=countList[idx]
+            else :
+                return False
+    return True
+if baby_gin(inputList):
+    print("Baby_gin!")
+else:
+    print("Not babygin!")
+
+4.view
+for case in range(10):
+    casesize = int(input())
+    caseList = list(map(int,input().split()))
+    result = 0
+    for num in range(2,len(caseList)-2):
+        Max = 0
+        for lr in range(-2,3):
+            if lr==0:
+                continue
+            else:
+                if caseList[num+lr]>Max:
+                    Max=caseList[num+lr]
+        if Max<caseList[num]:
+            result+=caseList[num]-Max
+    print(f'#{case+1} {result}')

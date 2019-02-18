@@ -1,0 +1,146 @@
+#0. view
+
+def getMax(here):
+    mymax = heights[here-2]
+ 
+    if mymax < heights[here-1] :
+        mymax = heights[here-1]
+    if mymax < heights[here+1] :
+        mymax = heights[here+1]
+    if mymax < heights[here+2] :
+        mymax = heights[here+2]
+    return mymax
+ 
+ 
+ 
+ 
+TC=10
+for tc in range(1,TC+1):
+    N = int(input())
+    heights = list(map(int,input().split()))
+ 
+    ans=0
+ 
+    for here in range(2,N-2):
+        side = getMax(here)
+        if side < heights[here]:
+            ans += heights[here] -side
+ 
+    print(f'#{tc} {ans}')
+
+
+
+
+
+#1. min max
+
+TC= int(input())
+
+for tc in range(1,TC+1):
+	n= int(input())
+	num = list(map(int,input().split()))
+
+	ans= max(num)-min(num)
+
+	print(f'#{tc} {ans}')
+
+
+
+#2. 숫자 카드
+
+TC= int(input())
+
+for tc in range(1,TC+1):
+	n= int(input())
+	num = list(map(int,input()))
+
+	w=max(num)+1
+	counts=[0]*w
+	for i in num:
+		counts[i]+=1
+
+	many=0
+	for k in range(len(counts)):
+		if counts[k]>=many:
+			many= counts[k]
+			a=k
+	print(f'#{tc} {a} {many}')
+
+
+
+#3. 구간합
+
+
+TC= int(input())
+
+for tc in range(1,TC+1):
+	N,M= map(int,input().split())
+	num= list(map(int,input().split()))
+
+	l=[]
+	for i in range(N-M+1):
+		a = 0
+		for j in range(i, M+i):
+			a += num[j]
+		l.append(a)
+	ans = max(l)-min(l)
+
+
+	print(f'#{tc} {ans}')
+
+
+
+
+
+#4. Flatten
+TC=10
+ 
+for tc in range(1,TC+1):
+    move = int(input())
+    boxes = list(map(int,input().split()))
+ 
+ 
+    for i in range(1,move+1):
+        boxes[boxes.index(max(boxes))]-=1
+        boxes[boxes.index(min(boxes))]+=1
+ 
+        if i == move:
+            ans= max(boxes)-min(boxes)
+            break
+    print(f'#{tc} {ans}')
+ 
+
+
+
+#5. 전기버스
+TC= int(input())
+
+for tc in range(1, TC+1):
+	K, N, M= map(int,input().split())
+	charging_stations = list(map(int, input().split()))
+	stations = [0]*(N+1)
+	for i in range(M):
+		stations[charging_stations[i]] = 1
+		ans = now = 0
+	while(True):
+		before = now
+		now += K
+		if now >= N:
+			break
+		if stations[now] == 1:
+			ans +=1
+		else:
+			for i in range(1,K+1):
+				if stations[now- i] == 1:
+					now -= i
+					ans += 1
+					break
+			if now == before:
+				ans=0
+				break
+
+
+
+	print(f'#{tc} {ans}')
+
+

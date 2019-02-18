@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        /* 스타일 추가 */
+        table, tr, td {
+            border: 1.2px solid darkgray;
+        }
+    </style>
+</head>
+<body>
+    <h1>프로그래밍 교육</h1>
+    <p> <a href="index.html"target="_blank">파이썬 웹 참고사이트</a></p>
+    <hr>
+    <section>
+        <!-- <h2>와 <a>의 순서가 바뀌면 링크의 영역이 바뀐다 -->
+        <h2 id="python"><a href="https://docs.python.org/ko/3/tutorial/index.html"target="_blank">파이썬</a></h2>
+
+        <h3>Number type</h3>
+        <p>파이썬에서 숫자형은 아래와 같이 있다.</p>
+        <ol>
+            <li>int</li>
+            <li>float</li>
+            <li>complex</li>
+            <li><del>str</del></li>
+        </ol>
+        <h3>Sequence</h3>
+        <p>파이썬에서 시퀸스는 아래와 같이 있다.</p>
+        <h4><strong>시퀸스는 for문을 돌릴 수 있다!!</strong></h4>
+        <ol>
+            <li>str</li>
+            <li>list</li>
+            <li>tuple</li>
+            <li>range</li>
+        </ol>
+    </section>
+    <hr>
+    <section id="web">
+        <h2><a href="https://developer.mozilla.org/ko/">웹</a></h2>
+        <h3>기초</h3>
+        <!-- 이렇게 해도됨 그리고 nonr, square, circle, lower-alpha,
+            upper-roman, ... , ... 여기도 적용됨-->
+        <!-- 1. Inline style (인라인 스타일) -->
+        <ul style="list-style-type: circle;">
+            <li style="list-style-type: circle;">HTML</li>
+            <li style="list-style-type: circle;">CSS</li>
+        </ul>
+    </section> 
+    <section id="link">
+        <!-- a(anchor) -->
+        <!-- href values
+            1. 절대 URL (경로)
+            2. 상대 URL
+            3. element id
+            4. mailto:
+         -->
+        <hr>
+        <a href="https://www.google.com/" target="_self">절대 URL</a>
+        <!-- 새로운 텝 blank -->
+        <a href="index.html" target="_blank">상대 URL</a>
+        <!-- 12번줄 id값 python 지정 위치로 이동 -->
+    </section>
+    <section>
+        <a href="#python">파이썬으로(id python)</a>
+    </section>
+    <section>
+        <a href="mailto:google@naver.com">메일 보내기</a>
+    </section>
+    <section>
+        <a href="#web">Web으로(id web)</a>
+    </section>
+    <section>
+        <a href="#link">link으로(id link)</a>
+    </section>
+
+    <section>
+        <!-- img src는 소스의 경로 alt는 마우스 올리면 뜨는 설명창 이미지에 대한 설명을 넣음 w,h크기 설정이지만 보통은 나중에 style로 설정함 w,h 중에 하나만 설정하면 원본 비율 그대로 넣어짐-->
+        <a href="http://m.bto.or.kr/01/01_9.php"target="_blank"><img src="images/images.jpg" alt="광안리" width="400px" height=""></a>
+        <!-- controls를 넣게 되면 재생바 등등이 보인다 -->
+        <video src="video1.mp4" width="" height="" autoplay controls></video>
+    </section>
+    <!-- iframe -->
+    <section>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/1pgEOtMnhYc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </section>
+    <section>
+        <!-- table tr*3 하면 3개만들어짐 -->
+        <!-- table>tr*3>td*4 -->
+        <table>
+            <!-- table row -->
+            <tr>
+                <th></th>
+                <th>월</th>
+                <th>화</th>
+                <th>수</th>
+            </tr>
+            <tr>
+                <!-- table data -->
+                <td>A 코스</td>
+                <!-- 세로로 2칸 차지하게됨 -->
+                <td rowspan="2">짬뽕</td>
+                <td></td>
+                <!-- 가로로 2칸 차지하게됨 -->
+                <td colspan="2">스파게티</td>
+            </tr>
+            <tr>
+                <td>B 코스</td>
+                <td>초밥</td>
+                <td>감자탕</td>
+            </tr>
+        </table>
+        <table>
+                <th>Time</th>
+                <th>Indoor</th>
+                <th></th>
+                <th>Outdoor</th>
+            <tr>
+                <td></td>
+                <td>소극장</td>
+                <td>중극장</td>
+                <td>대극장</td>
+            </tr>
+            <tr>
+                <td>10:00</td>
+                <td rowspan="2">아리랑</td>
+                <td></td>
+                <td>10CM</td>
+            </tr>
+            <tr>
+                <td>13:00</td>
+                <td rowspan="2">선우정아</td>
+                <td rowspan="2">참깨라면</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>15:00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>17:00</td>
+                <td>크러쉬</td>
+                <td></td>
+                <td>폴킴</td>
+            </tr>
+        </table>
+    </section>
+    <section>
+        <!-- action은 특정한 위치로 보낼 때(URL) method의 기본값은 GET -->
+        <form action="" method="GET">
+            <input type="text" value="ID">
+            <br>
+            <input type="password" value="password">
+            <!-- 숫자만 step은 일정 범위를 설정하는 것(신발사이즈나 기타 활용)-->
+            <input type="number" min="15" max="35" step="5">
+            <input type="submit" value="Login">
+            <!-- 버튼설정 name을 똑같이 지정 해줘야 됨 (이름에 해당하는 그룹에서 움직임), checked(기본 체크설정 값)-->
+            <br>
+            <div>
+                <input type="radio" name="sand" checked>Yellow
+                <br>
+                <input type="radio" name="sand">Red
+                <br>
+                <input type="radio" name="sand">Blue
+            </div>
+            <!-- 중복 된 버튼 체크 -->
+            <div>
+                <input type="checkbox" name="place">사막모래<br>
+                <input type="checkbox" name="place">바다모래<br>
+                <input type="checkbox" name="place">산모래<br>
+                <input type="checkbox" name="place">인공모래<br>
+                <input type="checkbox" name="place">우주모래<br>
+            </div>
+            <!-- select checked와 같은 것으로 selected는 초기 값, disabled 선택불가 -->
+            <select name="" id="">
+                <option>푸른 달</option>
+                <option selected>붉은 달</option>
+                <option>검은 달</option>
+                <option disabled>노란 달</option>
+                <option disabled>청록 달</option>
+            </select>
+        </form>
+    </section>
+</body>
+</html>

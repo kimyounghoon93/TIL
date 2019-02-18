@@ -1,0 +1,128 @@
+DAY02
+
+1. 숫자카드
+
+T=int(input())
+for time in range(T):
+    N=int(input())
+    dic={}
+    a=input()
+    for ele in a:
+        if not dic.get(ele):
+            dic[ele]=1
+        else:
+            dic[ele]+=1
+    max_num=0
+    max_num_key=0
+    for key,value in dic.items():
+        if value > max_num:
+            max_num=value
+            max_num_key = key
+        elif value==max_num:
+            if max_num_key<key:
+                max_num_key=key
+
+    print('#{0} {1} {2}'.format(time+1, max_num_key, max_num))
+
+
+2. 구간합
+
+T=int(input())
+for time in range(T):
+    N,M = map(int,input().split())
+    a=list(map(int,input().split()))
+    l=[]
+    for i in range(N-M+1):
+        sec_sum = sum(a[i:i+M])
+        l.append(sec_sum)
+    
+    num_max = max(l)
+    num_min = min(l)
+    res = num_max-num_min
+    print('#{0} {1}'.format(time+1,res))
+
+
+3. min/max
+
+T= int(input())
+for time in range(T):
+    N=int(input())
+    l=list(map(int,input().split()))
+    max_num=0
+    min_num = 1000001
+    for i in l:
+        if i > max_num:
+            max_num = i
+        if i < min_num:
+            min_num = i	
+    print(f'#{time+1} {max_num-min_num}')
+
+
+4. 전기버스
+
+T = int(input())
+
+for time in range(1,T+1):
+    K, N, M = map(int,input().split())
+    l=list(map(int,input().split()))
+    count=[0]*(N+1)
+
+    for ele in l:
+        count[ele]=1
+
+    last_charge_idx = 0
+    charge=0
+
+    while last_charge_idx+K < len(count)-1:
+        if not 1 in count[last_charge_idx+1:last_charge_idx+K+1]:
+            charge=0
+            break
+        else:
+            for i in range(len(count[:K+last_charge_idx+1])):
+                if count[i] ==1:
+                    last_charge_idx = i
+            charge+=1
+
+    print(f'#{time} {charge}')
+
+
+5. Flatten
+
+for time in range(1,11):
+    dump_time = int(input())
+    l=list(map(int,input().split()))
+
+    while dump_time > 0:
+        max_block = 0
+        min_block = 101
+        for block in range(100):
+            if l[block] > max_block:
+                max_block = l[block]
+                max_block_idx = block
+            if l[block] < min_block:
+                min_block = l[block]
+                min_block_idx = block
+        if max_block - min_block ==0 or max_block - min_block ==1:
+            break
+
+        l[max_block_idx] -=1
+        l[min_block_idx] +=1
+
+        dump_time-=1
+
+    print(f'#{time} {max(l)-min(l)}')
+
+
+6. view
+
+TC = 10
+for tc in range(1,TC+1):
+    z = int(input())
+    l = list(map(int, input().split()))
+
+    res=0
+    for i in range(2,z-1):
+        if l[i] > l[i-1] and l[i] > l[i-2] and l[i] > l[i+1] and l[i] > l[i+2]:
+            tall = max(l[i-2], l[i-1], l[i+1], l[i+2])
+            res+=l[i] - tall
+    print(f'# {tc} {res}')

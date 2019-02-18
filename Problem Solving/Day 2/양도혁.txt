@@ -1,0 +1,195 @@
+# D01
+
+# 01
+# Next_Permutation
+def next_permutation(permutation) :
+    cand1 =  cand2 = -1
+    # permutation=[3,2,5,4,1,6]
+    n = len(permutation)
+    for i in range(1,n) :
+        if permutation[n-i] > permutation[n-i-1] :
+            cand1 = n-i-1
+            break
+        # temp = check
+    if cand1 == -1 :
+        return False
+    for i in range(n-1,cand1,-1) :
+        if permutation[i] > permutation[cand1] :
+            cand2 = i
+            break
+    permutation[cand1] ,  permutation[cand2] = permutation[cand2], permutation[cand1]
+
+    permutation[cand1+1:] = permutation[:cand1:-1]
+
+    return permutation
+
+import sys
+sys.stdin = open('input.txt', 'r')
+
+permutation = list(map(int, input().split()))
+
+while(next_permutation(permutation)) :
+    print(permutation)
+
+# 02
+# Counting Sort
+
+import sys
+sys.stdin = open('input.txt', 'r')
+
+data = list(map(int, input().split()))
+
+sorted_data = [0]*8
+counts = [0]*5
+for i in data :
+    counts[i] += 1
+for j in range(1,len(counts)) :
+    counts[j] += counts[j-1]
+for d in data :
+    sorted_data[counts[d]-1] = d
+    counts[d] -= 1
+print(sorted_data)
+
+# 03
+# Baby-Gin
+counts = [0] * 12
+sys.stdin = open('input.txt', 'r')
+item = int(input())
+tri = run = 0
+for i in range(6) :
+    counts[item % 10] += 1
+    item //= 10
+for i in range(10) :
+    if counts[i] >= 3 :
+        tri += (counts[i] // 3)
+        counts[i] %= 3
+    if counts[i] >= 1 and counts[i+1] and counts[i+2] :
+        counts[i] -= 1
+        counts[i+1] -= 1
+        counts[i+2] -= 1
+        run += 1
+
+if tri + run >= 2 :
+    print('baby')
+else :
+    print('fail')
+
+# 04
+# Swexpert 1206 View
+for i in range(1,11): # i는 TestCase
+    num_apart=int(input()) #아파트숫자
+    high_list=list(map(int,input().split()))#아파트높이
+    my_sum = 0
+    for j in range(num_apart):
+        if high_list[j] > 0 :
+            side = [high_list[j-2],high_list[j-1],high_list[j+1],high_list[j+2]]
+            m = 255
+            for k in side :
+                temp = high_list[j] - k
+                if temp < 0 :
+                    m = 0
+                    break
+                if temp < m :
+                    m = temp
+            my_sum+=m
+    print(f'#{i} {my_sum}')
+
+#D02
+
+#01 
+#sw1208 flattern
+for tc in range(1,11):
+    n=int(input())
+    my_map=list(map(int,input().split()))
+    result = 0
+    for j in range(n):
+        temp_max = max(my_map)
+        temp_min = min(my_map)
+        if temp_max == temp_min :
+            break
+        for i in range(100) :
+            if my_map[i] == temp_min:
+                my_map[i] += 1
+                break
+        for i in range(100) :
+            if my_map[i] == temp_max:
+                my_map[i] -= 1
+                break
+        # my_map[my_map.index(temp_max)] -= 1
+        # my_map[my_map.index(temp_min)] += 1
+        
+    result = max(my_map)-min(my_map)
+    print(f'#{tc} {result}')
+
+#02 전기버스
+#sw4831
+for tc in range(int(input())):
+    k,n,m =list(map(int,input().split()))
+    charge=list(map(int,input().split()))
+    result = 0
+    now = 0
+    many = len(charge)
+    check = True
+    while check :
+        check = False
+        if now + k >= n :
+            check = True
+            break
+        for t in range(k,0,-1) :
+            if now + t in charge :
+                now += t
+                result += 1
+                check = True
+                break
+    if not check :
+        result = 0
+    print(f'#{tc+1} {result}')
+
+#03 넘버카드
+#sw 4834
+for tc in range(int(input())):
+    n =int(input())
+    item = int(input())
+    count = [0]*10
+    for i in range(n) :
+        count[item%10] += 1
+        item //= 10
+    max_num = 0
+    max_item = -1
+    for i in range(10) :
+        if max_num <= count[i] :
+            max_num = count[i]
+            max_item = i
+    print(f'#{tc+1} {max_item} {max_num}')
+
+# 04 구간합
+# sw 4835
+for tc in range(int(input())):
+    n,m =list(map(int,input().split()))
+    v=list(map(int,input().split()))
+    my_max = -1
+    my_min = 10000*m
+    for i in range(n-m+1) :
+        item = 0
+        for j in range(m) :
+            item += v[i+j]
+        if my_max < item :
+            my_max = item
+        if my_min > item :
+            my_min = item
+    print(f'#{tc+1} {my_max-my_min}')
+
+# 05 min-max
+# sw 4828
+for tc in range(int(input())):
+    n =int(input())
+    number=list(map(int,input().split()))
+    # print(f'#{tc} {max(number)-min(number)}')
+    tMax = 1
+    tMin = 1000000
+    for i in number :
+        if tMax < i :
+            tMax = i
+        if tMin > i :
+            tMin = i
+    print(f'#{tc} {tMax-tMin}')

@@ -1,0 +1,87 @@
+Day2
+
+1.minmax
+caseSize = int(input())
+for case in range(caseSize):
+    inputSize = int(input())
+    inputList = list(map(int,input().split()))
+    Max = inputList[0]
+    Min = inputList[0]
+    for now in inputList:
+        if now >Max:
+            Max=now
+        elif now < Min:
+            Min=now
+    print(f'#{case+1} {Max-Min}')
+
+2.숫자카드
+caseSize = int(input())
+for case in range(caseSize):
+    listSize = int(input())
+    inputList = list(input())
+    casedict = {}
+    for now in inputList:
+        if not casedict.get(now):
+            casedict[now]=1
+        else:
+            casedict[now]+=1
+    Maxnum = 0
+    Maxcount = 0
+    for item in casedict:
+        if casedict[item] >= Maxcount:
+            if int(item)>Maxnum:
+                Maxnum = int(item)
+                Maxcount = casedict[item]
+    print(f'#{case+1} {Maxnum}')
+
+3.구간합
+caseSize = int(input())
+for case in range(caseSize):
+    caseInfo = list(map(int,input().split()))
+    inputList = list(map(int,input().split()))
+    minSum = sum(inputList[0:caseInfo[1]])
+    maxSum = sum(inputList[0:caseInfo[1]])
+    for start in range(0,len(inputList)-caseInfo[1]+1):
+        if sum(inputList[start:start+caseInfo[1]])>maxSum:
+            maxSum=sum(inputList[start:start+caseInfo[1]])
+        if sum(inputList[start:start+caseInfo[1]])<minSum:
+            minSum=sum(inputList[start:start+caseInfo[1]])
+    print(f'#{case+1} {maxSum-minSum}')
+
+4.Flattern
+for case in range(1):
+    dumpTime = int(input())
+    caseList = list(map(int,input().split()))
+    for tying in range(dumpTime):
+        maxidx = caseList.index(max(caseList))
+        minidx = caseList.index(min(caseList))
+        caseList[maxidx] -= 1
+        caseList[minidx] += 1
+    print(f'#{case+1} {max(caseList)-min(caseList)}')
+
+5.전기버스
+caseSize = int(input())
+for case in range(caseSize):
+    caseInfo = list(map(int,input().split()))
+    stationList = [0]+list(map(int, input().split()))
+    print(stationList)
+    start=0
+    count=0
+    next = start+1
+    while(start!=len(stationList)-1):
+        print(start,next)
+        if next==len(stationList):
+            count+=1
+            break
+        if stationList[start]+caseInfo[0]>=caseInfo[1]:
+            break
+        if stationList[next]-stationList[start]<=caseInfo[0]:
+            next+=1
+        else:
+            if next - start == 1:
+                count=0
+                break
+            count+=1
+            start=next-1
+            next=start+1
+    print(f'#{case+1} {count}')
