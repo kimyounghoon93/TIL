@@ -1,0 +1,63 @@
+pip install django==2.1.8
+
+폴더 생성 manage.py라는 파일이 생기는 폴더는 base프로젝트, root폴더라고함(이름변경해도 됨)
+django-admin startproject crud0416
+
+프로젝트 폴더는 
+settings.py가 들어가있는 폴더
+
+./manage.py startapp movies
+
+./manage.py runserver $IP:$PORT
+
+settings.py
+ALLOWED_HOSTS = ['playground-busanteam.c9users.io']
+보안상 취약해서 ['*'] = 모든 주소를 허용한다 는 사용하지 않음
+
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+ 'movies',]
+
+첫 번 째 페이지 구축
+1. movies폴더 안에 views.py에 함수 만들기
+	(request)는 암거나 써도됨
+
+			1_render는 특정한 페이지만 보여주는 응답(리스폰스)
+			2_3가지 응답을 보내라고 정해줘서 3가지의 
+2. def hello(request):
+    return render(request, 'hello.html', {})
+		
+		(root폴더 외의 밖은 알 수가 없어서 사용하지 못한다)
+3. 상위폴더 crud안의 urls.py에는 views.py 세팅이 없으므로
+루트폴더 안에 movies폴더의 views.py를 인풋하겠다
+from movies import views
+,
+페스추가
+        '/hello'라는 주소로 요청이 오면 views안의 hello 함수를 실행
+path('hello/', views.hello),
+
+html파일은 앱폴더안에 templates폴더를 만들어서 그 안에 넣어놓으면
+
+*요청 반응 순서*
+0-검색창에 요청보내면
+1-urls.py
+2-주소창에서 요청한 hello검색
+3-views에서 헬로 함수 찾기
+4-찾은 함수hello를 찾아서 명령어 시행 (hello.html을 보여줌)
+
+Page not found(404)가 뜨면 urls.py에 입력을 안해서 그런 경우가 태반
+
+베리어블라운팅(동적인 주소)
+urls.py
+path('hi/<str:apple>/', views.hi),
+
+views.py에 함수추가
+def hi(request, apple):
+    return render(request, 'hi.html', {'banana':apple})
+						'banana'는 hi.html에서 변수( {{ banana }} )로 사용가능
+앞서 urls.py에 apple로 지정했기 때문에 똑같이 apple로 정해줘야함

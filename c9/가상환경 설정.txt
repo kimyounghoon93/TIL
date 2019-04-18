@@ -1,0 +1,145 @@
+pyenv virtualenv 3.6.7 insta-venv
+
+pyenv local insta-venv
+
+(장고설치)
+pip install django==2.1.8
+* 주의 _  ==***** << ==을 붙이면 정확히 해당 버전으로 설치 됨
+
+django-admin startproject insta .
+* 주의 _ 명령어 뒤에 . 을 붙이면 해당 폴더에 만듦
+
+./manage.py runserver $IP:$PORT
+서버를 외부와 연결시킴
+
+외부와 연결 시키려면 주소를 입력하여야 함 settings.py에
+28  ALLOWED_HOSTS = ['playground-busanteam.c9users.io']
+
+앱 생성
+./manage.py startapp posts (posts라는 앱을 만들겠다.)
+
+settings.py에
+33  INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'posts',
+]
+
+
+요청 받은 후 1번 urls.py에 가장 먼저 도착함(insta의 urls.py)
+from django.contrib import admin
+from django.urls import path,include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('posts/', include('posts.urls')),
+
+]
+
+
+별개로 posts 폴더 안에 urls.py를 생성하고
+from django.urls import path
+
+app_name = 'posts'
+
+urlpatterns = [
+    
+]를 추가한다
+
+
+./manage.py makemigrations
+./manage.py migrate
+
+
+
+insta폴더안에 insta폴더에
+templates 폴더 생성 그안에 base.html 생성
+
+base.html 파일 설정
+부트스트렙 설정, font awesome 아이콘 설정
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+</head>
+<body>
+    {% block container %}
+    {% endblock %}
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
+
+페이지 만들기
+
+1. posts폴더 안에 views.py에 작성
+2. urls.py 작성
+3. 페이지 만들기
+4_ 처음만 하는 것 settings.py에
+58  'DIRS': [os.path.join(BASE_DIR, 'insta', 'templates')], 추가
+
+urls.py
+from django.urls import path
+from . import views
+app_name = 'posts'
+
+urlpatterns = [
+    path('create/', views.create, name='create'),
+]
+
+
+insta 안에 appposts폴더에 templates(생성) 폴더에 appposts(생성, 같은 이름으로)폴더에 create.html
+{% extends 'base.html' %}
+
+{% block container %}
+
+<h1>New Post</h1>
+
+{% endblock %}
+
+
+
+*bootstrap*
+Navbar
+사용 할 코드 복사 후
+insta의 templates 폴더안에 base.html에 body 제일 상단에 코드 붙여넣기
+
+
+
+
+
+장고 라이브러리 설치
+pip install django-bootstrap4
+하고난 후
+settings.py에 
+33  INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'bootstrap4',
+    'posts',
+]
+부트스트렙 4 추가
+
+
+
+
+사진을 관리, 업로드하는 앱 설치
+pip install pillow
+이미지를 가공하는 앱(용량관리)
+pip install pilkit django-imagekit
+

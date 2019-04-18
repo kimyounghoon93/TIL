@@ -1,0 +1,40 @@
+pyenv-virtualenv 3.6.7 orm-venv
+
+pyenv local orm-venv (이미 만들어 놓은 가상환경 불러오기)
+
+pip install django==2.1.8
+
+django-admin startproject orm .
+
+ls
+
+
+
+./manage.py startapp crud
+
+앱을 만들었으니 settings.py에 
+INSTALLED_APPS = ['crud',
+] 추가
+
+./manage.py makemigrations
+
+./manage.py migrate
+
+pip install django_extensions
+
+INSTALLED_APPS에 'django_extensions', 추가
+
+장고에 있는 파이썬 코드들을 사용할 수 있게 해주는 명령어[ ex) print ]
+
+# ./manage.py shell
+
+# >>> from crud.models import Post
+
+# >>> Post
+
+./manage.py shell_plus
+
+1번 사람이 작성한 글 모두 보기
+user1.post_set.all()
+
+
