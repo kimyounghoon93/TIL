@@ -1,0 +1,56 @@
+b1e637e12241f36bc3c0d9364692f780
+                
+e95a5568cd29dd9dbff504b444a0b920
+
+SEND REQUSET
+https://api.themoviedb.org/3/movie/top_rated?api_key=<<api_key>>&language=en-US&page=1
+-top순위
+https://api.themoviedb.org/3/movie/{movie_id}?api_key=<<api_key>>&language=en-US
+-detail			         ex) {}안에 278
+
+"request_token": "d95b8e486bdb41d0e97a9eab14b9b92f538dad84"
+
+https://www.themoviedb.org/authenticate/d95b8e486bdb41d0e97a9eab14b9b92f538dad84
+
+e95a5568cd29dd9dbff504b444a0b920
+
+https://api.themoviedb.org/3/authentication/session/new?api_key=e95a5568cd29dd9dbff504b444a0b920
+{
+	"request_token": "d95b8e486bdb41d0e97a9eab14b9b92f538dad84"
+}
+{
+    "success": true,
+    "session_id": "b0a71c440a296999ef234f1e05eb83c9c8524ffb"
+}
+
+
+
+pyenv virtualenv 3.6.7 api-env
+pyenv local api-env
+pip install django==2.1.8
+pip install djangorestframework
+django-admin startproject api .
+
+settings.py
+ALLOWED_HOSTS = ['*']
+
+
+# Application definition
+
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'rest_framework',
+]
+
+./manage.py makemigrations
+./manage.py migrate
+./manage.py createsuperuser
+./manage.py runserver $IP:$PORT
+
+pip install django-rest-swagger
+./manage.py loaddata movie.json

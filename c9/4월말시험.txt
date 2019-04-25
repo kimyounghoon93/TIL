@@ -1,0 +1,23 @@
+회원가입 경로
+from django.contrib.auth import login as auth_login
+from django.contrib.auth.forms import UserCreationForm
+
+def signup(request):
+    if request.method == 'POST':
+        signup_form = UserCreationForm(request.POST)
+        if signup_form.is_valid():
+            user = signup_form.save()
+            auth_login(request, user)
+            return redirect('articles:list')
+    else:
+        signup_form = UserCreationForm()
+    return render(request, 'accounts/signup.html', {'signup_form': signup_form})
+
+N:M, USER 위주
+
+CRUD,
+부트스트렙 안나옴
+모델폼을 만들고 쓸줄 알아야함 forms.py
+class MovieForm(forms.ModelForm):
+팔로우 말고 좋아요만 공부 만들수 있어야함
+장고 컨트리뷰 나옴(임포트)

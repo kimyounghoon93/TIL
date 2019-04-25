@@ -61,3 +61,27 @@ def hi(request, apple):
     return render(request, 'hi.html', {'banana':apple})
 						'banana'는 hi.html에서 변수( {{ banana }} )로 사용가능
 앞서 urls.py에 apple로 지정했기 때문에 똑같이 apple로 정해줘야함
+
+
+
+190423
+GET - request 요청보낼 때 값을 넣는 공간이 없다(body가 존재하지 않음 = 주소에 모든걸 담아야 함)
+!!! 로그인 할 때 GET방식을 사용하면 절대 안됨. 그리고 공유기능을 생각해보면 GET이 공유
+POST - 반대 (보안이 강함) - 좋아요, 팔로우 등등 내부에서 작동하는 것은 모두 포스트
+
+<form action="" method = "POST">
+action="" <<< 빈칸이면 자기 자신의 주소로 요청을 보냄
+
+{% csrf_token %} - method="POST" 일때만
+일련번호 같은 느낌 (우리가 만든 페이지에서 보낸 요청만 받겠다.-보안)
+
+def create(request):
+    if request.method == 'POST':
+        request.POST
+    else:
+        form = MovieForm()
+    return render(request, 'movies/create.html', {'movie_form': form})
+
+
+
+ 
