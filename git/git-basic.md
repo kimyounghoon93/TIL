@@ -65,3 +65,12 @@ protocol=https
 host=github.com
 ```
 
+
+
+# Git push와 pull이 충돌이 일어나면
+
+```bash
+shift + z
+두번
+```
+

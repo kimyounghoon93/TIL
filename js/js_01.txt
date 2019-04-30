@@ -1,0 +1,126 @@
+JS
+document.querySelector('h1')
+<h1>?Good Bye!?</h1>?
+
+document.querySelector('h1').innerText
+"Good Bye!"
+
+document.querySelector('h1').innerText = 'Bye, World!'
+"Bye, World!"
+window.open();
+
+
+노드 실행
+student@DESKTOP MINGW64 ~/yh/js (master)
+$ node
+> let a = 1
+undefined  <<< 반환 값이 없다는 뜻(노 상관)
+> a
+1
+> .exit
+
+
+student@DESKTOP MINGW64 ~/yh/js (master)
+$ node
+> let a = 1
+undefined
+> a
+1
+> .exit
+
+student@DESKTOP MINGW64 ~/yh/js (master)
+$ node
+> let a = 1
+undefined
+> let b = 2
+undefined
+> let c = a + b
+undefined
+> a
+1
+> b
+2
+> c
+3
+> c = c + 10
+13
+> c += 10
+23
+> c *= 10
+230
+> c++ 값을 증가 시키기 전에 c를 사용하겠다
+230
+> c
+231
+> ++c 값을 증가 시키고 c를 사용하겠다
+232
+
+값을 할당할 때 유용함 ++a, a++
+> d = c--
+232
+> f = --c
+230
+> d
+232
+
+
+student@DESKTOP MINGW64 ~/yh/js (master)
+$ node
+> const numbers = [1,2,3,4]
+> numbers.length
+4
+> numbers.reverse()
+[ 4, 3, 2, 1 ]
+> numbers.reverse()
+[ 1, 2, 3, 4 ]
+> numbers.push('a')
+5
+> numbers
+[ 1, 2, 3, 4, 'a' ]
+> numbers.pop()
+'a'
+> numbers
+[ 1, 2, 3, 4 ]
+> numbers.unshift('a')
+5
+> numbers
+[ 'a', 1, 2, 3, 4 ]
+> numbers.shift()
+'a'
+> numbers
+[ 1, 2, 3, 4 ]
+> numbers.includes(1)
+true
+> numbers.includes(0)
+false
+> numbers.push('a')
+5
+> numbers.push('a')
+6
+> numbers
+[ 1, 2, 3, 4, 'a', 'a' ]
+> numbers.indexOf('a')
+4 ( 첫 번째 값 )
+> numbers.indexOf('b')
+-1 ( 존재하지 않는 값 )
+> numbers.join()
+'1,2,3,4,a,a'
+> numbers.join('')
+'1234aa'
+> numbers.join('-')
+'1-2-3-4-a-a'
+> numbers
+[ 1, 2, 3, 4, 'a', 'a' ]
+> numbers.slice(2, 4)
+[ 3, 4 ]
+> numbers.slice(2)
+[ 3, 4, 'a', 'a' ]
+> 'abcd'.slice(2)
+'cd'
+> numbers.filter(function(x){ x>1 })
+[]
+> numbers.filter(function(x){ return x>1 })
+[ 2, 3, 4 ]
+> numbers.filter(function(x){ return x > 1 })
+[ 2, 3, 4 ]
+

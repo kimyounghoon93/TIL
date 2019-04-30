@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- JS 위치 1 -->
+</head>
+<body>
+    <!-- JS 위치 2 -->
+    <script>
+        /*
+            여러줄 주석은
+            이렇게 사용함
+        */
+        // 한 줄 주석은 이렇게 사용함
+        alert('Welcome to JS! 알림창!')
+
+        // 문서에 출력하기
+        document.write('<h1>Good Bye!</h1>')
+
+        // let 변수선언 (자유롭게 변경 가능한 값)
+        let word1 = '외안되'        
+        document.write(word1)
+
+        // const : 재할당 불가능
+        const word2 = '외안되'
+        document.write(word2)
+
+        // word = '왜 안돼'
+        // document.write(word)
+        
+        // const 변수 선언
+        const firstName = 'happy'
+        const lastName = 'hacking'
+        const fullName = firstName + lastName
+        document.write('<h1>' + fullName + '!!' + '</h1>')
+        
+        document.write(`<h1>${fullName}!!</h1>`)
+
+        // console에 출력하기
+        console.log(`Console: ${fullName}`)
+
+        // python : user_name (띄어쓰기가 필요한 부분에 언더바)
+        // JS : userName (띄어쓰기가 필요한 부분에 대문자 하지만 언더바를 사용해도 되긴 함)
+        // 사용자 입력 받기 (자바스트립스 네이밍)
+        const userName = prompt('Hello! Who are you?')
+        // let message = `<h1>Hello! ${userName}</h1>`
+        let message = ''
+        // if 문
+        if (userName === 'admin') {
+            message = '<h1>This is secret Admin page</h1>'
+        } else if (userName === 'Ssafy'){
+            message = '<h1>삼성 소프트웨어 아카데미</h1>'
+        } else {
+            message = `<h1>Hello ${userName}</h1>`
+        }
+
+        // == vs ===
+        // == : '값'만 비교 (ex. 0 == "0"는 True)
+        // === : '값' & '타입' 비교 (ex. 0 == "0"는 False, python의 == 과 같다.)
+        
+        document.write(message)
+
+        // 삼항 연산자
+        const number = 10
+        number === 10 ? document.write('number === 10') : document.write('number !== 10')
+
+        // 세미콜론 테스트
+        const a = 1
+        const b = 2
+        const c = a + b;
+        
+        (a+b).toSring()
+
+        // const a = 1
+        // const b = 2  아래부분()처럼 동작함
+        // const c = a + b(a+b).toSring()
+
+
+    </script>
+</body>
+</html>
