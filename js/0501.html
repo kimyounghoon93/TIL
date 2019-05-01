@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- Event Listener -->
+    <div id="my"></div>
+    <button id="this-button">Click me</button>
+
+    <script>
+        /*
+            Event Listener
+            [무엇]을 [언제] [어떻게]한다.
+            Click me 버튼을 클릭하면 메세지가 나온다.
+        */
+        // 1. 무엇 -> 버튼
+        // 버튼의 정보를 불러오기 위해 버튼에 아이디를 부여 * id를 뜻하는 # 꼭 추가해야됨*
+        const button = document.querySelector('#this-button')
+
+        // 2. 언제 -> 버튼을 'Click' 하면 함수를 실행한다
+        // 1번 인자 - 행위
+        // 2번 인자 - 함수 - 클릭을 뭘로했는지 id는 뭔지 등등의 정보가 담겨있다
+        button.addEventListener('click', function(event){
+        
+        // 3. 어떻게 한다 (메시지를 나오게 한다.)
+            const area = document.querySelector('#my')
+            area.innerHTML = '<h1>뿅</h1>'
+        })
+</script>
+</body>
+</html>
