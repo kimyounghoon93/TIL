@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 주소를 불러와서 사용하는 것 - CDN 방법 (개발용은 에러코드가 뜸)-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> <--최적화, 실제 상용할 때 이걸로 바꿈(띄어쓰기를 없애서 용량을 최적화 시키고 알아볼 수 없게끔 만들어 놓은 것) -->
+</head>
+<body>
+    <div id="app">
+        <!-- 아래 형식은 app으로 지정된 곳 안에 사용해야 함 -->
+        {{ message }} - {{ count }}
+        <p v-if="checked">이건보임.</p>
+        <li v-for="post in posts">
+            {{ post }}
+        </li>
+        <li v-for="info in student">
+        <!-- <li v-for="info in object.keys(student)">  << key값 가져오기-->
+        <!-- <li v-for="info in object.keys(student)"> -->
+            {{ info }} - {{ student[info] }}
+        </li>
+    </div>
+
+    <script>
+        const app = new Vue({
+            // 상단 div의 app을 가르킴, el == 엘리먼트의 약자
+            el: '#app', // 어디에
+            data: { // 무엇을
+                message: 'Hello, Vue!',
+                count: 0,
+                checked: true, //여기를 false로 바꾸면 안보임
+                posts: ['첫 게시물', '두 번째 게시물', '세번째!'],
+                student: {
+                    name: 'nwith',
+                    univ: 'KNU',
+                },
+            },
+            methods: { // 어떻게 (에로우 펑션 사용못함)
+                // this.message
+                // (자기자신)에 있는 메시지를 가져오겠다
+                // 데이터를 조작하는 함수들
+                plus: function(){
+                    this.count++
+                }
+            }
+
+        })
+    </script>
+</body>
+</html>
+
+<!-- 
+app.$el
+<div id=​"app">​
+    Hello, Vue!
+​</div>​
+app.$data.message
+"Hello, Vue!"
+app.message
+"Hello, Vue!"
+ -->
+
+<!-- 
+    * data binding*
+
+# MVC(MTV)
+    M - Model (models.py)
+    V - View (Template.html)
+    C - Controller (views.py)
+ 
+# MVVM
+    M - Model (models.py)
+    V - View (Template.html)
+    VM - View-Model (Vue)   ===   C - Controller (views.py)
+
+-->
