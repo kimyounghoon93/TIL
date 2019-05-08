@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 단순 문자열로 취급됨 -->
+        <!-- {{ header }} -->
+        <div v-html="header">
+
+        </div>
+        <!-- 다른친구 -->
+        <!-- 실제 html로 렌더링해서 커다랗게 보여줌 -->
+        <div v-html="header">
+
+        </div>
+        <!-- 흔적도 없음(랜더링을 없어졌다 사라졌다 계속 반복함) -->
+        <h1 v-if="visible">v-if</h1>
+        <!-- 흔적은 있고 css로 숨겨짐 -->
+        <h1 v-show="visible">v-show</h1>
+
+
+
+    </div>
+
+    <script>
+        // 뷰 인스턴스에 접근을 할 때는 달려 표시를 하여 콘솔창에 입력한다.
+        const app = new Vue({
+            el: '#app',
+            data: {
+                header: '<h1>제목입니다.</h1>',
+                visible: true,
+            }
+        })
+    </script>
+</body>
+</html>

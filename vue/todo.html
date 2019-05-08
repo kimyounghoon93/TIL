@@ -6,43 +6,77 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .completed {
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
+        <select v-model="status">
+            <option value="all" selected>All</option>
+            <option value="active">Active</option>
+            <option value="completed">Completed</option>
+        </select>
         <ul>
             <!-- true를 없애려면 반대로 !를 입력해주면 된다. -->
             <!-- <li v-for="todo in todos" v-if="!todo.completed" v-on:click="todo.completed = true"> -->
-            <li v-for="todo in todos" v-if="!todo.completed" v-on:click="check(todo)">
+            <!-- <li v-for="todo in todos" v-if="!todo.completed" v-on:click="check(todo)"> -->
+            <li v-for="todo in todosByStatus" v-bind:key="todo.id">
                     <!-- <li v-for="todo in todos" v-if="!todo.completed" ++ 조건추가 혹은 && 조건추가> -->
-                {{ todo.content }}
+                <input type="checkbox" v-model="todo.completed">
+                <!-- todo.comlpeted ? 'comlpeted':'' (삼항연산자-조건 하나), 아래 오브젝트 형태로 구현하면 콤마로 여러가지의 조건을 걸수 있음 -->
+                <span v-bind:class="{completed: todo.completed}">{{ todo.content }}</span>
             </li>
             <!-- <li v-else-if="true"></li> -->
-            <li v-else v-on:click="check(todo)">[완료!]</li>
+            <!-- <li v-else v-on:click="check(todo)">[완료!]</li> -->
             <!-- v-on (온 클릭, 온 서브밋을 할 때 -- 이벤트 리스너랑 비슷함)-->
-            
 
+            <!-- <div v-bind:style="{color: 'red', fontSize: '30px'}"> -->
+                                    <!-- 인스턴스 변수명으로 설정된 컬러 가져올땐 아래처럼 -->
+            <!-- <div v-bind:style="{color: newTodo, fontSize: '30px'}"> -->
+                <!-- <span>Red Text, 30px</span> -->  
+            <!-- </div> -->
+
+            <!-- 단어를 역순으로 출력함 -->
+            <!-- <span>{{ newTodo.split('').reverse().join('') }}</span> 아래에 변수명으로 지정해줘서 아래로 사용 -->
+            <span>{{ reverseNewTodo }}</span>
         </ul>
-        
+        <div>                                   <!-- v-on은 이벤트 추가, enter == '13' -->
+            <input type="text" v-model="newTodo" v-on:keyup.13="addTodo">
+            <button v-on:click="addTodo">+</button>
+        </div>
+        <footer>
+            <button v-on:click="clearCompleted">Clear Completed</button>
+        </footer>
     </div>
 
     <script>
         const app = new Vue({
             el: '#app',
             data: {
+                status: 'all',
+                newTodo: '',
                 todos: [
                 {
+                    id: 1,
                     content: '점심 메뉴 고민하기',
                     completed: true,
                 },
                 {
+                    id: 2,
                     content: '사다리 타기',
                     completed: false,
                 },
                 {   
+                    id: 3,
                     content: '약속의 2시, 낮잠자기',
                     completed: false,
                 },   
                 {
+                    id: 4,
                     content: '야자하기',
                     completed: false,
                 },
@@ -53,7 +87,41 @@
             methods: {
                 check: function(todo){
                     todo.completed = !todo.completed
-                }
+                },
+                addTodo: function(){
+                    this.todos.push({
+                        id: Date.now(),
+                        content: this.newTodo,
+                        completed: false,
+                    })
+                    this.newTodo = ''
+                },
+                // .filter
+                clearCompleted: function(){
+                    const notCompletedTodos = this.todos.filter((todo)=>{
+                        return !todo.completed
+                    }) // [{ ... },{ ... }]
+                    this.todos = notCompletedTodos
+                },
+            },
+            computed: {
+                // 어떠한(미리 계산되어야 할 결과값들) 계산된 결과를 담는다
+                reverseNewTodo: function(){
+                    return this.newTodo.split('').reverse().join('')
+                },
+                todosByStatus: function(){
+                    if (this.status === 'active') {
+                        return this.todos.filter((todo)=>{
+                            return !todo.completed
+                        })
+                    }
+                    if (this.status === 'completed') {
+                        return this.todos.filter((todo)=>{
+                            return todo.completed
+                        })
+                    }
+                    return this.todos
+                },
             },
         })
     </script>
