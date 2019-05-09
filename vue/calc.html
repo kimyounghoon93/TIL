@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <!-- html element -->
+    <div id="app">
+        <button>0</button>
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>4</button>
+        <button>5</button>
+        <button>6</button>
+        <button>7</button>
+        <button>8</button>
+        <button>9</button>
+    </div>
+<!-- Shift + Alt + F == 들여쓰기 단축키 -->
+    <script>
+        // Vue instance
+        const app = new Vue({
+            el: '#app',
+            data: {
+                stack: [],
+                current: '',
+
+                prev: 0,
+                next: 0,
+                oper: '',
+            },
+            methods: {
+                push: function(num){
+                    // if (this.stack && typeof this.stack[this.stack.length-1] === 'string'{
+
+                    // }
+                    this.current += num.toString()
+                },
+                oper: function(symbol) {
+                    this.stack.push(parseInt(this.current))
+                    this.stack.push(symbol)
+                },
+                calc: function(){
+                    
+                }
+            }
+        })
+    </script>
+</body>
+</html>

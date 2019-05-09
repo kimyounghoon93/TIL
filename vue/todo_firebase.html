@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,16 +11,16 @@
     <!-- VueFire -->
     <script src="https://unpkg.com/vuefire/dist/vuefire.js"></script>
     <script>
-    // Initialize Firebase
-    // TODO: Replace with your project's customized code snippet
-    var config = {
-        apiKey: "AIzaSyBtu1gZ3vnlyhTCunOANkJvJIZBoJIlQ2w",
-        authDomain: "vue-todo-a.firebaseapp.com",
-        databaseURL: "https://vue-todo-a.firebaseio.com",
-        projectId: "vue-todo-a",
-    };
-    firebase.initializeApp(config);
-    
+        // Initialize Firebase
+        // TODO: Replace with your project's customized code snippet
+        var config = {
+            apiKey: "AIzaSyBtu1gZ3vnlyhTCunOANkJvJIZBoJIlQ2w",
+            authDomain: "vue-todo-a.firebaseapp.com",
+            databaseURL: "https://vue-todo-a.firebaseio.com",
+            projectId: "vue-todo-a",
+        };
+        firebase.initializeApp(config);
+
     </script>
     <style>
         .completed {
@@ -28,6 +29,7 @@
         }
     </style>
 </head>
+
 <body>
     <div id="app">
         <select v-model="status">
@@ -39,9 +41,9 @@
             <li v-for="todo in todosByStatus" v-bind:key="todo.id">
                 <input type="checkbox" v-model="todo.completed" v-on:change="updateTodo(todo)">
                 <span v-bind:class="{completed: todo.completed}">{{ todo.content }}</span>
-            </li>  
+            </li>
         </ul>
-        <div>                                   
+        <div>
             <input type="text" v-model="newTodo" v-on:keyup.13="addTodo">
             <button v-on:click="addTodo">+</button>
         </div>
@@ -85,10 +87,10 @@
                 todos: database.ref('messages'),
             },
             methods: {
-                check: function(todo){
+                check: function (todo) {
                     todo.completed = !todo.completed
                 },
-                addTodo: function(){
+                addTodo: function () {
                     this.$firebaseRefs.todos.push({
                         id: Date.now(),
                         content: this.newTodo,
@@ -97,15 +99,15 @@
                     this.newTodo = ''
                 },
                 // .filter
-                clearCompleted: function(){
-                    const completedTodos = this.todos.filter((todo)=>{
+                clearCompleted: function () {
+                    const completedTodos = this.todos.filter((todo) => {
                         return todo.completed
                     })
-                    completedTodos.forEach((todo)=>{
+                    completedTodos.forEach((todo) => {
                         this.$firebaseRefs.todos.child(todo['.key']).remove()
                     })
                 },
-                updateTodo: function(todo){
+                updateTodo: function (todo) {
                     // todo = {'content': 'hi', completed: true}
                     // { 'content': 'hi', completed: true }
                     const newTodo = { ...todo } // spread operator
@@ -114,14 +116,14 @@
                 },
             },
             computed: {
-                todosByStatus: function(){
+                todosByStatus: function () {
                     if (this.status === 'active') {
-                        return this.todos.filter((todo)=>{
+                        return this.todos.filter((todo) => {
                             return !todo.completed
                         })
                     }
                     if (this.status === 'completed') {
-                        return this.todos.filter((todo)=>{
+                        return this.todos.filter((todo) => {
                             return todo.completed
                         })
                     }
@@ -131,4 +133,5 @@
         })
     </script>
 </body>
+
 </html>
