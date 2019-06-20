@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .completed {
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <select v-model="status">
+            <option value="all">all</option>
+            <option value="active" >active</option>
+            <option value="completed">completed</option>
+
+        </select>
+        <ul>
+            <li v-for="todo in todosByStatus()" v-bind:key="todo.id">
+                <input type="checkbox" v-model="todo.completed">
+                <span v-bind:class="todo.completed ? 'completed':''">{{ todo.content }}</span>
+            </li>
+            <div v-bind:style="{color:newTodo, fontSize:'30px'}">
+                <span>Red Text, 30px</span>
+            </div>
+
+
+            <div>
+                <input type="text" v-model="newTodo" v-on:keyup.enter="addTodo">
+                <button v-on:click="addTodo">+</button>
+            </div>
+
+            <footer>
+                <button v-on:click="clearCompleted">Clear Completed</button>
+            </footer>
+            <!-- <footer>
+                <button v-on:click="delTodo">삭제</button>
+            </footer> -->
+
+        </ul>
+    </div>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                status:'all',
+                newTodo: '',
+                todos: [
+                    {
+                        id: 1,
+                        content: '점심 메뉴 고민하기',
+                        completed: true,        
+                    },
+                    {
+                        id: 2,
+                        content: '사다리타기',
+                        completed: false,
+                    },
+                    {
+                        id: 3,
+                        content: '약속의 2시, 낮잠자기',
+                        completed: false,
+                    },
+                    {
+                        id: 4,
+                        content: '야자하기',
+                        completed: false,
+                    }
+                ]
+            },
+            methods: {
+                check: function(todo){
+                    todo.completed = !todo.completed
+                },
+                
+
+                clearCompleted: function(){
+                    const notCompletedTodos = this.todos.filter((todo)=>{
+                       return !todo.completed
+                    })
+                    this.todos = notCompletedTodos
+                },
+                todosByStatus: function(){
+                    if (this.status === 'active'){
+                        return this.todos.filter((todo)=>{
+                            return !todo.completed
+                        })
+                    }
+
+                    if (this.status === 'completed'){
+                        return this.todos.filter((todo)=>{
+                            return todo.completed
+                        })
+                    }
+                
+                    return this.todos
+                },
+
+            }
+        })
+    </script>
+</body>
+</html>

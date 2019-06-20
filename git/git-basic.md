@@ -56,8 +56,7 @@
 ```bash
 # git 이름, 이메일 재설정
 git config --global user.name 'kimyounghoon93'
-git config -- global user.email
-'kyh2021@naver.com'
+git config -- global user.email 'kyh2021@naver.com'
 
 # GitHub 로그인 정보 초기화
 git credential reject
